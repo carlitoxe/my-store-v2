@@ -1,29 +1,22 @@
 const express = require('express');
-const { faker } = require('@faker-js/faker');
+const CategoriesService = require('../services/categories.service')
 
 const router = express.Router();
+const service = new CategoriesService();
 
-router.get('/', (req, res) => {
-  const categories = [];
-  const { limit } = req.query;
-  console.log(limit);
-  const size = limit || 5;
-  for (let index = 0; index < size; index++) {
-    categories.push({
-      name: faker.commerce.department(),
-      // id
-    })
-  }
+router.get('/', async (req, res) => {
+  const categories = await service.find();
   res.json(categories)
 })
 
-router.get('/:categoryId', (req, res) => {
-  const { categoryId } = req.params;
-  res.json({
-    categoryId,
-    name: 'Clothes',
-    products: []
-  })
+router.get('/:categoryId', async (req, res, next) => {
+  try {
+    const { categoryId } = req.params;
+    const category = service.findOne(categoryId)
+    res.json(category);
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.get('/:categoryId/products/:productId', (req, res) => {
@@ -42,22 +35,25 @@ router.post('/', (req, res) => {
   })
 })
 
-router.patch('/:id', (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  res.json({
-    message: 'category updated',
-    data: body,
-    id
-  })
+router.patch('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const category = await service.update(id, body)
+    res.json(category)
+  } catch (error) {
+    next(error)
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    message: 'category deleted',
-    id
-  })
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await service.delete(id)
+    res.json(response)
+  } catch (error) {
+    next(error)
+  }
 })
 
 module.exports = router;
