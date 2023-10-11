@@ -2,18 +2,17 @@ const express = require('express');
 const routerApi = require('./routes');
 
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
-const validatorHandler = require('./middlewares/validator.handler');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hello World, this is my server in Express');
 })
 
-app.get('/new-endpoint', (req, res) => {
+app.get('/api/new-endpoint', (req, res) => {
   res.send('Hello World, this is my new endpoint :D');
 })
 
