@@ -1,4 +1,4 @@
-# my-store
+# my-store v2
 
 Project from: Backend with Node.js: API REST with Express.js. [Link to the Platzi Course](https://platzi.com/cursos/backend-nodejs/)
 
