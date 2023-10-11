@@ -2,6 +2,8 @@ const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 // import { faker } from '@faker-js/faker'
 
+
+
 class ProductsService {
   constructor() {
     this.products = [];

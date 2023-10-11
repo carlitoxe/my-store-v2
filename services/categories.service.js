@@ -8,14 +8,24 @@ class CategoriesService {
   }
 
   generate() {
-    const size = 5;
-    for (let index = 0; index < size; index++) {
+    const limit = 10;
+    for (let index = 0; index < limit; index++) {
       this.categories.push({
         id: faker.string.uuid(),
         name: faker.commerce.department(),
       })
     }
   }
+
+  async create(data) {
+    const newCategory = {
+      id: faker.string.uuid(),
+      ...data,
+    };
+    this.categories.push(newCategory);
+    return newCategory;
+  }
+
 
   find() {
     return new Promise((resolve) => {
@@ -43,7 +53,7 @@ class CategoriesService {
       ...category,
       ...data,
     };
-    return this.category[index];
+    return this.categories[index];
   }
 
   async delete(id) {
