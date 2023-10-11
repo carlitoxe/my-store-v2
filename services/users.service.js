@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+const boom = require('@hapi/boom');
 
 class UsersService {
 
@@ -21,12 +22,43 @@ class UsersService {
   }
 
   find() {
-    return this.users;
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.users)
+      }, 2000)
+    });
   }
 
   findOne(id) {
-    return this.users.find(user => user.id === id);
+    const user = this.users.find(user => user.id === id);
+    if (!user) {
+      throw boom.notFound('user not found');
+    }
+    return user
   }
+
+  async create(data) {
+    const newUser = {
+      id: faker.string.uuid(),
+      ...data,
+    };
+    this.users.push(newUser);
+    return newUser;
+  }
+
+  update(id, data) {
+    const index = this.users.findIndex(user => user.id === id);
+    const user = this.users[index]
+    if (user === -1) {
+      boom.notFound('user not found')
+    }
+    this.users[index] = {
+      ...user,
+      ...data,
+    }
+    return this.users[index]
+  }
+
 }
 
 module.exports = UsersService

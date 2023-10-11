@@ -61,7 +61,7 @@ router.patch(
       const { id } = req.params;
       const body = req.body;
       const category = await service.update(id, body);
-      res.json(category);
+      res.json({ message: 'category updated', category});
     } catch (error) {
       next(error);
     }

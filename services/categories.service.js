@@ -3,19 +3,36 @@ const boom = require('@hapi/boom')
 
 class CategoriesService {
   constructor() {
-    this.categories = []
-    this.generate()
+    this.categories = [
+      {
+        id: faker.string.uuid(),
+        name: 'Electronics'
+      },
+      {
+        id: faker.string.uuid(),
+        name: 'Clothes'
+      },
+      {
+        id: faker.string.uuid(),
+        name: 'Toys'
+      },
+      {
+        id: faker.string.uuid(),
+        name: 'Food'
+      }
+    ]
+    // this.generate()
   }
 
-  generate() {
-    const limit = 10;
-    for (let index = 0; index < limit; index++) {
-      this.categories.push({
-        id: faker.string.uuid(),
-        name: faker.commerce.department(),
-      })
-    }
-  }
+  // generate() {
+  //   const limit = 10;
+  //   for (let index = 0; index < limit; index++) {
+  //     this.categories.push({
+  //       id: faker.string.uuid(),
+  //       name: faker.commerce.department(),
+  //     })
+  //   }
+  // }
 
   async create(data) {
     const newCategory = {
