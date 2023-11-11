@@ -12,7 +12,8 @@ const router = express.Router();
 const service = new ProductsService();
 
 router.get('/', async (req, res) => {
-  const products = await service.find();
+  const { limit } = req.query;
+  const products = await service.find(limit);
   res.json(products);
 });
 

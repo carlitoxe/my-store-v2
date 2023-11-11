@@ -32,10 +32,14 @@ class ProductsService {
     return newProduct;
   }
 
-  async find() {
+  async find(limit) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(this.products)
+        if (limit) {
+          resolve(this.products.splice(0, limit))
+        } else {
+          resolve(this.products)
+        }
       }, 2000)
     });
   }
