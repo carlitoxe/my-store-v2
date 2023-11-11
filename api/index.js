@@ -16,16 +16,6 @@ app.get('/api/new-endpoint', (req, res) => {
   res.send('Hello World, this is my new endpoint :D');
 })
 
-
-// app.get('/clients/:id' , (req, res)=>{
-//   const { id } = req.params
-//   res.json({
-//     id,
-//     name: 'toxe',
-//   })
-// } )
-
-
 routerApi(app)
 
 app.use(logErrors);
